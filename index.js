@@ -43,6 +43,19 @@ class Observer {
 
     })
   }
+  filter(projection) {
+    return new Observer(observer => {
+      const subscription = this._subscriber({
+        next(val) {
+          if (projection(val)) {
+            observer.next(val)
+          }
+        }
+      })
+      return subscription;
+
+    })
+  }
 }
 
 //HOW IT WORKS
@@ -57,7 +70,10 @@ time.subscribe({
 })
 
 const click$ = Observer.fromEvent(someDomEl, 'click');
-click$.map(client => client.offsetX).subscribe({
+click$
+.map(client => client.offsetX)
+.filter(val=>val>25)
+.subscribe({
     next(result) {
         console.log(result)
     }
