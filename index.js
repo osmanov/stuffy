@@ -56,6 +56,9 @@ class Observer {
 
     })
   }
+  concat(...obs) {
+
+  }
 }
 
 //HOW IT WORKS
